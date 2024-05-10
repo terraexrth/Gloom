@@ -1,0 +1,5 @@
+.add_task_list:hover{
+	opacity: 0.8;
+	transition: 0.5s;
+	background-color: rgba(0, 0, 0, 0.1);
+}

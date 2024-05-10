@@ -1,0 +1,37 @@
+.sidebar_ovr {
+	width: 300px; 
+	height: 100vh;
+	background-color: var(--primary-color);
+	position: fixed;
+	display: flex;
+	z-index: 100; 
+  }
+
+.sidebar_head_content {
+  background: var(--primary-darker);
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  padding: 20px 0px 20px 0px;
+}
+
+.nameContent {
+ text-align: left;
+ margin-left: 10px;
+}
+
+.logout_button {
+	
+	background-color: red;
+}
+
+@media screen and (max-width: 900px){
+	.sidebar_ovr{
+		display: none;
+	}
+}
+
+

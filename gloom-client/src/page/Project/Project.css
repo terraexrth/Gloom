@@ -1,0 +1,38 @@
+.project_container {
+	width: 100vw;
+	height: 100vh;
+	background-color: var(--background-color);
+}
+
+.project_content {
+	margin-left: 300px;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	height: 100vh;
+	width: calc(100vw - 300px);
+	flex-direction: column;
+}
+.p_box {
+	width: 60vw;
+	margin-top: 50px;
+}
+
+.header_project {
+	padding: 10px;
+}
+
+@media screen and (max-width: 900px) {
+	.project_content{
+		width: 100%;
+		margin-left:0;
+		
+	}
+	.p_box{
+		width: 80vw;
+	}
+	.header_project{
+		padding: 0;
+	}
+	
+}

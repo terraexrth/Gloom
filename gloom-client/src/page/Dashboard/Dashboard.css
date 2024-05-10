@@ -1,0 +1,39 @@
+.dashboard_container {
+	display: flex;
+	height: 100vh;
+	background-color: var(--background-color);
+  }
+  
+
+  
+  .card_container {
+	flex: 1;
+	padding: 50px;
+	
+	/* overflow-x: auto;  */
+	overflow-y: hidden;
+	display: flex;
+	flex-direction: column;
+  }
+  
+  .card_wrapper {
+	margin-left: 300px;
+	display: flex;
+	/* flex-wrap: nowrap; */
+	overflow-x: hidden;
+	/* overflow-y: hidden; */
+  }
+  
+  .card_wrapper > * {
+	flex: 0 0 auto; 
+	margin-right: 10px; 
+  }
+  
+  @media screen and (max-width: 900px) {
+	.card_wrapper{
+		margin-left: 0;
+	}
+	.card_container{
+		padding: 25px;
+	}
+  }
