@@ -8,5 +8,5 @@ router.post("/login", userController.signIn)
 router.get("/user/",verifyAccessToken,userController.getAllUser)
 router.get("/user/who/:id",verifyAccessToken,userController.getUserById)
 router.get("/user/me",verifyAccessToken,userController.authMe)
-
+router.get("/user/tag/:tag",verifyAccessToken,userController.getUserByTag)
 module.exports = router;

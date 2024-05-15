@@ -84,6 +84,20 @@ exports.getUserById = async (req,res) => {
 	}
 }
 
+
+exports.getUserByTag = async (req,res) => {
+	const tag = req.params.tag;
+	try {
+		const user = await User.find({pfcode:tag});
+		if(!user){
+			return res.status(401).json({message:"no user : ", tag})
+	}
+	res.status(200).send(user.map((u) => ({username:u.username, id:u._id})));
+	}catch(e){
+		console.log(e);
+		res.status(500).send("Server error");
+	}
+}
 exports.authMe = async (req, res) => {
   try {
     const { authorization } = req.headers;

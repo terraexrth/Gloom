@@ -11,7 +11,7 @@ exports.createProject = async (req, res) => {
 
 	 const user = await User.findById(userCreated);
 
-	 console.log(user)
+	
 	 if(!user){
 	 	return res.status(404).json({message:'User not found '});
 
@@ -33,7 +33,6 @@ exports.getUserProject = async (req,res) => {
 			return res.status(404).json({message:"project not found on this user"})
 		}
 		const {projects} = project;
-		console.log(projects)
 		res.status(200).json(projects)
 	}catch(e) {
 		console.error("Error: ",e)
