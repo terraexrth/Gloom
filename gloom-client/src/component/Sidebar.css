@@ -1,27 +1,43 @@
 .sidebar_ovr {
-	width: 300px; 
+	width: 300px;
 	height: 100vh;
 	background-color: var(--primary-color);
+	color: white;
 	position: fixed;
-	display: flex;
-	z-index: 100; 
+	left: 0;
+	top: 0;
+	
+	overflow: auto;
   }
+  
+  .sidebar_head_content {
+	display: flex;
+	align-items: center;
+	padding: 20px;
+	background-color: var(--primary-darker);
 
-.sidebar_head_content {
-  background: var(--primary-darker);
-  width: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: row;
-  position: absolute;
-  padding: 20px 0px 20px 0px;
-}
+  }
+  
+  .sidebar_menu {
+	display: flex;
+	flex-direction: column;
 
-.nameContent {
- text-align: left;
- margin-left: 10px;
-}
+  }
+  
+  .sidebar_menu div {
+	padding: 10px;
+	margin-bottom: 10px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+  }
+  
+  .sidebar_menu div:hover {
+	background-color: var(--primary-darker);
+  }
+  .nameContent {
+	text-align: left;
+	margin-left: 10px;
+  }
 
 .logout_button {
 	

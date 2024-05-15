@@ -16,6 +16,7 @@ import { authMe, getUserById } from "../../service/user";
 import { stringToColour } from "../../global/global.config";
 import TaskAccordian from "../../component/Accordian/TaskAccordian";
 import { addTask } from "../../service/task";
+import MemberAccord from "../../component/Accordian/MemberAccord";
 
 const Project = () => {
   const { id } = useParams();
@@ -118,6 +119,7 @@ const Project = () => {
         </Box>
 
         <TaskAccordian project={project} />
+		<MemberAccord/>
       </div>
     </div>
   );

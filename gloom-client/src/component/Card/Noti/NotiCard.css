@@ -1,0 +1,10 @@
+.noticard_container{
+	background: #000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.noticard_box {
+	width: 900px;
+}

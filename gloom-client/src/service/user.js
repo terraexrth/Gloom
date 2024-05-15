@@ -22,3 +22,9 @@ export const getUserById = async(id) =>{
 }
 
 
+export const getUserByTag = async(tag) =>{
+	const encodedTag = encodeURIComponent(tag);
+	const response = await httpClientWithAuth.get(`api/user/tag/${encodedTag}`)
+	return response.data
+}
+

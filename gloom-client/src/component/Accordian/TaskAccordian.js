@@ -53,6 +53,10 @@ const TaskAccordian = (props) => {
 
   const handleAddTask = async () => {
     try {
+		if(taskResponse.taskName === ""){
+			return toast.error("กรุณากรอกชื่อ Task");
+		}
+
       await addTask(project.id, taskResponse);
       setTaskResponse({
         taskName: "",
@@ -86,7 +90,7 @@ const TaskAccordian = (props) => {
         <AccordionDetails>
           <List>
 			{task.map((task) => (
-				<ListItem key={task._id}>
+				<ListItem className="task_list" key={task._id}>
 					<Typography>{task.taskName}</Typography>
 				</ListItem>
 			))}
@@ -96,7 +100,7 @@ const TaskAccordian = (props) => {
                   <TextField
                     id="task_name"
                     name="taskName"
-                    labelId="task-label"
+                    labelid="task-label"
                     label="ภาระงาน"
                     InputLabelProps={{ shrink: true }}
                     sx={{ width: { xs: "10vw", md: "25vw" } }}
@@ -115,7 +119,7 @@ const TaskAccordian = (props) => {
                     name="enroled"
                     value={taskResponse.enroled}
                     onChange={handleTaskChange}
-                    labelId="incharge-label"
+                    labelid="incharge-label"
                     label="ผู้รับผิดชอบ"
                   >
                     <MenuItem value={"Ten"}>Ten</MenuItem>
@@ -138,7 +142,7 @@ const TaskAccordian = (props) => {
                 handleInputField();
               }}
             >
-              <Typography fontWeight={"bold"} color={"var(--primary-color)"}>
+              <Typography className="buttonText" fontWeight={"bold"} color={"var(--primary-color)"}>
                 เพิ่ม
               </Typography>
             </ListItem>

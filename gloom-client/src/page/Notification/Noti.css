@@ -1,0 +1,8 @@
+.noti_container{
+	width: 100%;
+}
+
+.noti_content {
+	margin-left: auto;
+	width: calc(100vw - 300px);
+}

@@ -1,5 +1,8 @@
-.add_task_list:hover{
-	opacity: 0.8;
+.add_task_list .buttonText:hover{
+	opacity: 0.5;
 	transition: 0.5s;
-	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.task_list {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }

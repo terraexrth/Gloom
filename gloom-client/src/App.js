@@ -1,6 +1,6 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { Dashboard, Login, ProjectDetail } from "./page";
+import { Dashboard, Login, ProjectDetail, Notification } from "./page";
 import { createTheme } from "./theme";
 import { ThemeProvider } from "@emotion/react";
 import { Toaster } from "react-hot-toast";
@@ -48,6 +48,7 @@ function App() {
             path="/project/:id"
             element={isAuth ? <ProjectDetail /> : <Login />}
           ></Route>
+		  <Route path ="/notification" element={<Notification/>}></Route>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
         </Routes>
       </div>
