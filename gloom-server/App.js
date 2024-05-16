@@ -32,7 +32,7 @@ mongoose
 app.use('/api/task',taskManage)
 app.use('/api',projectManage)
 app.use('/api',userManage)
-app.use('/api',inviteManage)
+app.use('/api/invite',inviteManage)
 
 app.listen(process.env.SERVER_PORT || 8000, () => {
   console.log(`\n✅ Server running on port ${process.env.SERVER_PORT || 3000}`);
