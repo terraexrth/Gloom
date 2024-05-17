@@ -22,6 +22,8 @@ const projectSchema = new mongoose.Schema(
     dueDated: { type: Date },
     createdDate: { type: Date, default: Date.now },
     userCreated: { type: String, require: true },
+
+	membered: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   },
   { versionKey: false }
 );

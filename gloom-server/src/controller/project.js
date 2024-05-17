@@ -127,7 +127,6 @@ exports.deleteProject = async (req, res) => {
 
 exports.getTaskInProject = async (req, res) => {
   const projectId = req.params.id;
-  console.log("projectId", projectId);
   if (!projectId) {
     return res.status(400).json({ message: "Project ID is required" });
   }
