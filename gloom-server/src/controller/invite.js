@@ -1,5 +1,7 @@
 const Invite = require("../model/Invite");
-const Project = require("../model/Task");
+
+const { Project } = require("../model/Task");
+const  User  = require("../model/User");
 
 exports.sendInvite = async (req, res) => {
   const { invitedBy, inviteTo, projectId } = req.body;
@@ -49,6 +51,10 @@ exports.getInvite = async (req, res) => {
 
 exports.notification = async (req, res) => {
   const userId = req.query.userId;
+
+  if (!userId || userId === "undefined" || userId === "null") {
+    return res.status(400).json({ message: "userId is required" });
+  }
   console.log(userId);
   res.setHeader("Content-Type", "text/event-stream");
   res.setHeader("Cache-Control", "no-cache");
@@ -70,36 +76,49 @@ exports.notification = async (req, res) => {
 };
 
 exports.updateInvite = async (req, res) => {
-  const { inviteId, status } = req.body;
-  try {
-    const updatedInvite = await Invite.findByIdAndUpdate(
-      inviteId,
-      { status },
-      { new: accept }
-    );
-    if (!updatedInvite) {
-      return res.status(404).json({ message: "Invite not found" });
-    }
-    res.status(200).json(updatedInvite);
+	const { inviteId, status } = req.body;
+	try {
+	  const updatedInvite = await Invite.findByIdAndUpdate(
+		inviteId,
+		{ status },
+		{ new: true }
+	  );
+	  if (!updatedInvite) {
+		return res.status(404).json({ message: "Invite not found" });
+	  }
+  
+	  if (status === "accept") {
+		const project = await Project.findById(updatedInvite.projectId);
+		if (!project) {
+		  return res.status(404).json({ message: "Project not found" });
+		}
+		if (!project.members) {
+		  project.members = [];
+		}
+		project.members.push(updatedInvite.inviteTo);
+		await project.save();
+  
+		// Update the membered field in the User schema
+		await User.findByIdAndUpdate(
+		  updatedInvite.inviteTo,
+		  { $push: { "projects.membered": updatedInvite.projectId } },
+		  { new: true }
+		);
+	  }
+  
+	  res.status(200).json(updatedInvite);
+	} catch (e) {
+	  console.error(e);
+	  res.status(500).json({ message: "Failed to update invite" });
+	}
+  };
 
-    if (status === "accept") {
-      const project = await Project.findById(updatedInvite.projectId);
-      project.members.push(updatedInvite.inviteTo);
-      await project.save();
-    }
-  } catch (e) {
-    console.error(e);
-    res.status(500).json({ message: "Failed to update invite" });
-  }
-};
-
-exports.getInvitedPending = async (req, res) => {
+exports.getMember = async (req, res) => {
   const { projectId } = req.query;
   try {
     const invite = await Invite.find({
       projectId,
-      status: "pending",
-    }).select("inviteTo");
+    }).select("inviteTo to status");
     if (!invite) {
       return res.status(404).json({ message: "Invite not found" });
     }
