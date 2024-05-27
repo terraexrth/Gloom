@@ -28,11 +28,19 @@ const TaskAccordian = (props) => {
     userCreated: "",
     enroled: "",
   });
+  const [expanded, setExpanded] = useState(true);
 
+  const handleAccordionChange = () => {
+    setExpanded((prevExpanded) => !prevExpanded);
+  };
   const onGetTask = async () => {
     try {
+      if (!project.id) {
+        console.error("Project ID is null or undefined");
+        return;
+      }
       const response = await getTask(project.id);
-	  console.log(response)
+  
       setTask(response);
     } catch (e) {
       console.error(e);
@@ -53,9 +61,9 @@ const TaskAccordian = (props) => {
 
   const handleAddTask = async () => {
     try {
-		if(taskResponse.taskName === ""){
-			return toast.error("กรุณากรอกชื่อ Task");
-		}
+      if (taskResponse.taskName === "") {
+        return toast.error("กรุณากรอกชื่อ Task");
+      }
 
       await addTask(project.id, taskResponse);
       setTaskResponse({
@@ -65,7 +73,7 @@ const TaskAccordian = (props) => {
         enroled: "",
       });
       toast.success("เพิ่ม Task สำเร็จ");
-	  onGetTask();
+      onGetTask();
     } catch (e) {
       console.error(e);
     }
@@ -75,25 +83,25 @@ const TaskAccordian = (props) => {
     onGetTask();
   }, [project]);
 
-
-
   return (
     <div>
       <Accordion
-        expanded={true}
+        expanded={expanded}
         square="false"
         sx={{ width: { xs: "80vw", md: "60vw" }, borderRadius: 3 }}
       >
-        <AccordionSummary expandIcon={<ArrowDropDownIcon />}>
+        <AccordionSummary expandIcon={<ArrowDropDownIcon />} onClick={handleAccordionChange}>
           <Typography fontSize={18}>ภาระงาน</Typography>
         </AccordionSummary>
         <AccordionDetails>
           <List>
-			{task.map((task) => (
-				<ListItem className="task_list" key={task._id}>
-					<Typography>{task.taskName}</Typography>
-				</ListItem>
-			))}
+            {task.map((taskItem) => (
+              <ListItem className="task_list" key={taskItem._id}>
+                <Typography key={`${taskItem._id}-name`}>
+                  {taskItem.taskName}
+                </Typography>
+              </ListItem>
+            ))}
             {inputField && (
               <ListItem>
                 <FormControl>
@@ -142,7 +150,11 @@ const TaskAccordian = (props) => {
                 handleInputField();
               }}
             >
-              <Typography className="buttonText" fontWeight={"bold"} color={"var(--primary-color)"}>
+              <Typography
+                className="buttonText"
+                fontWeight={"bold"}
+                color={"var(--primary-color)"}
+              >
                 เพิ่ม
               </Typography>
             </ListItem>

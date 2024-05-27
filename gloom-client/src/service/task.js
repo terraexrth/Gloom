@@ -6,7 +6,11 @@ export const addTask = async (id,bodyRequest) => {
 }
 
 export const getTask = async(id) =>{
-	const response = await httpClientWithAuth.get(`api/project/task/${id}`)
-	return response.data
+	try {
+		const response = await httpClientWithAuth.get(`api/project/task/${id}`);
+		return response.data;
+	  } catch (error) {
+		throw error; 
+	  }
 }
 

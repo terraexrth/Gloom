@@ -1,3 +1,5 @@
+import { useEffect } from "react";
+
 export const stringToColour = (str) => {
 	let hash = 0;
 	if(!str){
@@ -12,5 +14,29 @@ export const stringToColour = (str) => {
 	  colour += value.toString(16).padStart(2, '0');
 	}
 	return colour;
+  };
+  
+
+  export const useHorizontalScroll = (ref) => {
+	useEffect(() => {
+	  const scrollContainer = ref.current;
+  
+	  const onWheel = (e) => {
+		if (e.deltaY !== 0) {
+		  scrollContainer.scrollLeft += e.deltaY;
+		  e.preventDefault();
+		}
+	  };
+  
+	  if (scrollContainer) {
+		scrollContainer.addEventListener('wheel', onWheel);
+	  }
+  
+	  return () => {
+		if (scrollContainer) {
+		  scrollContainer.removeEventListener('wheel', onWheel);
+		}
+	  };
+	}, [ref]);
   };
   

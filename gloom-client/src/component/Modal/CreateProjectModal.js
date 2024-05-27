@@ -12,7 +12,7 @@ import { createProject } from "../../service/project";
 import toast from "react-hot-toast";
 
 const CreateProjectModal = (props) => {
-  const { handleCloseProjectModal, onGetAllProject, request } = props;
+  const { handleModalOpen, onGetAllProject, request } = props;
   const [projectResponse, setProjectResponse] = useState({
     projectName: "",
     projectDesc: "",
@@ -50,7 +50,7 @@ const CreateProjectModal = (props) => {
         onGetAllProject();
         toast.success("เพิ่มโครงงานสำเร็จ");
 
-        handleCloseProjectModal();
+        handleModalOpen();
 
         console.log("Success");
       } catch (error) {
@@ -95,7 +95,7 @@ const CreateProjectModal = (props) => {
                 cursor: "pointer",
                 marginRight: "10px",
               }}
-              onClick={handleCloseProjectModal}
+              onClick={handleModalOpen}
             />
           </Stack>
           <div className="modal_content">

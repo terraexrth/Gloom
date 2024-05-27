@@ -31,6 +31,10 @@ const Project = () => {
 
   const onGetProject = async () => {
     try {
+		if(!id) {
+			console.error('ID is null or undefined');
+			return;
+		}
       const response = await getProjectById(id, auth.id);
       setProject(response);
     } catch (e) {
@@ -119,7 +123,7 @@ const Project = () => {
         </Box>
 
         <TaskAccordian project={project} />
-		<MemberAccord/>
+        <MemberAccord project={project} />
       </div>
     </div>
   );

@@ -19,7 +19,7 @@ export const getUserProject = async (id,userId) => {
 };
 
 export const createProject = async (bodyRequest) => {
-  const response = await httpClient.post("api/addProjects", bodyRequest);
+  const response = await httpClientWithAuth.post("api/addProjects", bodyRequest);
 
   return response.data;
 };

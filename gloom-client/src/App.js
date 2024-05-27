@@ -1,13 +1,14 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
-import { Dashboard, Login, ProjectDetail, Notification } from "./page";
+import { Dashboard, Login, ProjectDetail } from "./page";
 import { createTheme } from "./theme";
 import { ThemeProvider } from "@emotion/react";
 import { Toaster } from "react-hot-toast";
 import { useEffect, useState } from "react";
 import { authMe } from "./service/user";
 import { Badge } from "@mui/material";
-import NotificationsIcon from "@mui/icons-material/Notifications";
+import { getInvite, getNotification } from "./service/invite";
+import NotificationsComponent from "./component/Notification/Notification";
 
 function App() {
   const theme = createTheme();
@@ -27,20 +28,26 @@ function App() {
     onAuthMe();
   }, []);
 
+  //   useEffect(() => {
+  // 	if(isAuth){
+  // 		const eventSource = new EventSource(`http://localhost:8181/api/invite/notification?userId=${isAuth.id}`);
+  // 		eventSource.onmessage = (event) => {
+  // 		  const newNotifications = JSON.parse(event.data);
+  // 		  setNotification(newNotifications);
+  // 		};
+
+  // 		return () => {
+  // 		  eventSource.close();
+  // 		};
+
+  // 	}
+  //   },[isAuth])
+
   return (
     <ThemeProvider theme={theme}>
       <Toaster position="top-right" />
       <div className="App">
-        <div className="notification">
-          <Badge
-		  className="notification-badge"
-		  sx={{cursor: "pointer"}}
-            badgeContent={4}
-            color="error"
-          >
-            <NotificationsIcon color="action" />
-          </Badge>
-        </div>
+        {isAuth && <NotificationsComponent isAuth={isAuth} />}
 
         <Routes>
           <Route path="/" element={isAuth ? <Dashboard /> : <Login />}></Route>
@@ -48,7 +55,6 @@ function App() {
             path="/project/:id"
             element={isAuth ? <ProjectDetail /> : <Login />}
           ></Route>
-		  <Route path ="/notification" element={<Notification/>}></Route>
           {/* <Route path="/" element={<Dashboard />}></Route> */}
         </Routes>
       </div>

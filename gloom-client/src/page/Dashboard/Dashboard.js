@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./Dashboard.css";
 
 import {
@@ -11,6 +11,7 @@ import DeleteProjectModal from "../../component/Modal/DeleteProjectModal";
 import Sidebar from "../../component/Sidebar";
 import { authMe } from "../../service/user";
 import CardProject from "../../component/Card/Project/CardProject";
+import CreateProjectCard from "../../component/Card/ProjectCreate/CreateProjectCard";
 
 const Dashboard = () => {
   const [user, setUser] = useState(null);
@@ -24,7 +25,6 @@ const Dashboard = () => {
     try {
       const request = await authMe();
       setUser(request);
-      console.log(request);
     } catch (e) {
       console.error(e);
     }
@@ -59,15 +59,13 @@ const Dashboard = () => {
     }
   }, [user]);
 
-  console.log(user)
+  
 
   const handleModalOpen = async () => {
-    setProjectModalOpen(true);
+    setProjectModalOpen(!projectModalOpen);
   };
 
-  const handleCloseProjectModal = () => {
-    setProjectModalOpen(false);
-  };
+ 
 
   const handleCloseDeleteModal = () => {
     setDeleteModalOpen(false);
@@ -82,25 +80,52 @@ const Dashboard = () => {
     }
   };
 
-  console.log(projects);
+  const scrollRef = useRef(null);
+
+  useEffect(() => {
+    const scrollContainer = scrollRef.current;
+
+    const onWheel = (e) => {
+      if (e.deltaY !== 0) {
+        scrollContainer.scrollLeft += e.deltaY;
+        e.preventDefault();
+      }
+    };
+
+    if (scrollContainer) {
+      scrollContainer.addEventListener('wheel', onWheel);
+    }
+
+    // Clean up event listener on component unmount
+    return () => {
+      if (scrollContainer) {
+        scrollContainer.removeEventListener('wheel', onWheel);
+      }
+    };
+  }, []);
+
 
   return (
     <div className="dashboard_container">
       <Sidebar />
-
+		
       <div className="card_container">
         <div className="card_wrapper">
+		
           <CardProject
+		  	scrollRef={scrollRef}
             request={projects}
             handleGetProjectById={handleGetProjectById}
             setDeleteModalOpen={setDeleteModalOpen}
+			handleModalOpen={handleModalOpen}
           />
+		  
 
           {projectModalOpen && (
             <CreateProjectModal
               onGetAllProject={onGetUserProject}
               request={user}
-              handleCloseProjectModal={handleCloseProjectModal}
+              handleModalOpen={handleModalOpen}
             />
           )}
           {deleteModalOpen && (

@@ -33,7 +33,6 @@ const Sidebar = () => {
     onAuthMe();
   }, []);
 
-  console.log(avatarName);
 
   return (
     <div className="sidebar_ovr">
@@ -67,15 +66,10 @@ const Sidebar = () => {
             <Button sx={{ color: "white" }}>Dashboard</Button>
           </Link>
         </div>
+
         <div className="menu_item">
-          <Link to="/notification">
-            <Badge color="error" badgeContent={5}>
-              <Button sx={{ color: "white" }}>Notification</Button>
-            </Badge>
-          </Link>
-        </div>
-        <div className="menu_item">
-          <Button sx={{ color: "white" }}>Settings</Button>
+		
+          <Button onClick={handleLogout} sx={{ color: "white" }}>Logout</Button>
         </div>
       </div>
     </div>

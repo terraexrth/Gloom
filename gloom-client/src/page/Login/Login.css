@@ -2,8 +2,10 @@
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-image: linear-gradient(to top, rgba(0, 150, 78, 0.9) , rgba(255, 255, 255, 0.3)  100%),url('https://img.freepik.com/free-photo/close-up-hand-writing-notebook-top-view_23-2148888824.jpg?t=st=1714406975~exp=1714410575~hmac=715159e2c114b0e4513d0b2e209ecc1dc2ad50e20cebcf819edeb6e096a89b7a&w=1380');
-	background-size: cover;
+  background-image: linear-gradient(to top, rgba(0, 150, 78, 0.9) , rgba(255, 255, 255, 0.3)  100%),url('https://i.postimg.cc/Dyk52PSH/pexels-julia-m-cameron-4144923.jpg');
+	background-size:cover;
+	background-position: 0%	100%;
+	
 }
 .login_card_wrapped {
   justify-content: center;

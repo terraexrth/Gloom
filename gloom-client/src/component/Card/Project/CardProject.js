@@ -10,18 +10,21 @@ import {
   Chip,
 
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "./CardProject.css";
 import { getUserById } from "../../../service/user";
-import { stringToColour } from "../../../global/global.config";
+import { stringToColour, useHorizontalScroll } from "../../../global/global.config";
 import {Link} from 'react-router-dom'
+import CreateProjectCard from "../ProjectCreate/CreateProjectCard";
 
 const CardProject = (props) => {
-  const { request } = props;
+  const { request,handleModalOpen } = props;
 
   const [projects, setProjects] = useState([]);
   const [ownProject, setOwnProject] = useState([]);
   const [memberProject, setMemberProject] = useState([]);
+  const ownScroll = useRef(null);
+  const  memberScroll = useRef(null);
 
   const handleSetProjects = async () => {
     if (!request) {
@@ -79,13 +82,18 @@ const CardProject = (props) => {
     }
   }, [projects]);
 
+  
+  useHorizontalScroll(ownScroll)
+  useHorizontalScroll(memberScroll)
+
   return (
     <div className="card_p_container">
       <Chip  color="primary" label="My Project" sx={{width:120,height:40,borderRadius:100,fontWeight:'bold',fontSize:16}} />
-      <div className="own_project_container">
+      <div className="own_project_container"  ref={ownScroll}>
 		
         <div className="card_row">
-          {ownProject.length > 0 ? (
+			
+          {ownProject.length > 0 && 
             ownProject.map((project, index) => (
 				
 				<Link to={`/project/${project.id}`} >
@@ -125,16 +133,14 @@ const CardProject = (props) => {
               </Box>
 			  </Link>
             ))
-          ) : (
-            <div>none of data</div>
-          )}
+         }
         </div>
-		
+		<CreateProjectCard handleModalOpen={handleModalOpen}/>
       </div>
 	  
       <Chip sx={{background:'#1e88e5',color:'white'}} label="Participate" />
 
-      <div style={{ marginTop: 5 }} className="member_project_containet">
+      <div style={{ marginTop: 5 }} className="member_project_containet" ref={memberScroll}>
         <div className="card_row">
           {memberProject.length > 0 ? (
             memberProject.map((project, index) => (
